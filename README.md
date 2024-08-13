@@ -43,3 +43,7 @@ Once you've created an account, you can test cyber agents against the publicly a
 
 After creating an account, you need to download the openvpn configuration file and place it at pwngym/docker/htb/(accountname).ovpn before building the docker containers.
 Note that the .ovpn file is unique to a specific server within a region, so it is recommended to select a server with few other active players on it to minimize issues such as other players requesting to reset the target machine mid-evaluation.
+
+To run evaluations efficiently, installation of the Inspect AI VSCode extension is strongly recommended as it allows for passing arguments to the tasks via a sidebar menu.
+
+Note that Ollama is required for the model grading mechanism; while Mistral7B was used during the experiments, a lighter alternative such as Gemma2B could be used on computers which lack a discrete GPU.

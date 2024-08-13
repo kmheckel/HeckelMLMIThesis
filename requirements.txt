@@ -1,0 +1,11 @@
+chromadb
+paramiko
+docker
+llama-index-core
+llama-index-llms-openai
+llama-index-llms-mistralai
+llama-index-llms-deepinfra
+llama-index-llms-ollama
+llama-index-vector-stores-chroma
+llama-index-finetuning
+llama-index-embeddings-ollama
