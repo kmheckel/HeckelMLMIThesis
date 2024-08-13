@@ -47,3 +47,13 @@ Note that the .ovpn file is unique to a specific server within a region, so it i
 To run evaluations efficiently, installation of the Inspect AI VSCode extension is strongly recommended as it allows for passing arguments to the tasks via a sidebar menu.
 
 Note that Ollama is required for the model grading mechanism; while Mistral7B was used during the experiments, a lighter alternative such as Gemma2B could be used on computers which lack a discrete GPU.
+
+# Examining Logs from Experiments
+
+To view the execution traces of the cyber agent tested in the paper, use Inspect AI's view utility:
+
+From the OCEval directory:
+```
+inspect view
+```
+This will launch a web server running at localhost:7575 which you can connect to and browse the trials for each model and target machine.
