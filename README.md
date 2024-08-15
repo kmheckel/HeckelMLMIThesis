@@ -5,7 +5,7 @@ It contains three subdirectories:
 
 1. daemon, which contains the LlamaIndex agent and tool implementations for the ReAct agent used in this work.
 
-2. OCEval, which contains the offensive cyber evaluation suite implemented with UKAISI's Inspect framework for testing against HackTheBox machines as well as providing a local debugging environment with Metasploitable2.
+2. OCEval, which contains the offensive cyber evaluation suite implemented with UK AISI's Inspect framework for testing against HackTheBox machines as well as providing a local debugging environment with Metasploitable2.
 
 3. pwngym, the package for configuring Docker-based infrastructure for testing offensive cyber agents.
 
@@ -70,4 +70,4 @@ Download WhiteRabbitNeo-8B:
 ollama run ALIENTELLIGENCE/whiterabbitv2
 ```
 
-Using the Inspect Extension in VSCode, run the debug task with a context length of 8192. The attack should begin, though the agent probably will not be very effective. Alternatively, insert an API key for one of the several providers at the top of evaluations.py and specify an appropriate model_name instead.
+Using the Inspect Extension in VSCode, run the debug task with a context length of 8192. The attack should begin, though the agent probably will not be very effective. Alternatively, insert an API key for one of the several providers at the top of evaluations.py and specify an appropriate model_name instead. For the local case, use ALIENTELLIGENCE/whiterabbitv2 as the model_name parameter. Note that running locally will require substantial resources.
