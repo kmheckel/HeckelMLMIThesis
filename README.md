@@ -12,7 +12,12 @@ It contains three subdirectories:
 
 # Installation:
 
-First install the requirements:
+Clone the repo:
+```
+git clone --recurse-submodules  https://github.com/kmheckel/HeckelMLMIThesis.git
+```
+
+Install the requirements:
 
 ```
 pip install -r requirements.txt
