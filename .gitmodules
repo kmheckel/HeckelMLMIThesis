@@ -1,0 +1,9 @@
+[submodule "daemon"]
+	path = daemon
+	url = ./daemon/
+[submodule "OCEval"]
+	path = OCEval
+	url = ./OCEval/
+[submodule "pwngym"]
+	path = pwngym
+	url = ./pwngym/
