@@ -57,3 +57,17 @@ From the OCEval directory:
 inspect view
 ```
 This will launch a web server running at localhost:7575 which you can connect to and browse the trials for each model and target machine.
+
+# Try Locally:
+
+Install Ollama:
+```
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Download WhiteRabbitNeo-8B:
+```
+ollama run ALIENTELLIGENCE/whiterabbitv2
+```
+
+Using the Inspect Extension in VSCode, run the debug task with a context length of 8192. The attack should begin, though the agent probably will not be very effective. Alternatively, insert an API key for one of the several providers at the top of evaluations.py and specify an appropriate model_name instead.
