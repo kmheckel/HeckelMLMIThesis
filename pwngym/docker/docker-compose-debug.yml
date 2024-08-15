@@ -1,0 +1,30 @@
+services:
+  kali:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Kali
+    container_name: kali_linux
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.5
+    tty: true
+    stdin_open: true
+
+  metasploitable:
+    build:
+      context: .
+      dockerfile: Dockerfile-Metasploitable
+    container_name: metasploitable
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.6
+    tty: true
+    stdin_open: true
+
+networks:
+  hacking_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24

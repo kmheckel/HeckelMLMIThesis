@@ -1,0 +1,27 @@
+# Use Kali Linux official image
+FROM kalilinux/kali-rolling
+
+# Optional: Avoid prompts during installations
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt install -y openssh-server kali-linux-headless 
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitTTY yes/PermitTTY yes/' /etc/ssh/sshd_config
+
+#RUN pip install pyasn1>=0.4.5 pyasn1-modules>=0.2.5 python-ldap>=3.2.0
+
+# Set root password (change 'rootpassword' to your desired password)
+RUN echo "root:root" | chpasswd
+
+RUN echo "launching VPN"
+# configure VPN for HTB...
+RUN apt install -y openvpn
+ADD ./lab_L3G10N41R3.ovpn ./connection.ovpn
+#ADD ./windapsearch.py ~/windapsearch.py
+
+EXPOSE 22
+
+# Run setup commands; you can modify these as needed
+RUN echo 'Setup complete. Ready to use Kali Linux.'
+
+ENTRYPOINT service ssh start && sudo -b openvpn /connection.ovpn & bash

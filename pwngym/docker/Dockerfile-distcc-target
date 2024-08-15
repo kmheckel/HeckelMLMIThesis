@@ -1,0 +1,6 @@
+# This is a placeholder Dockerfile; in reality, you would likely pull an existing image
+FROM tleemcjr/metasploitable2:latest
+
+EXPOSE 22-3633
+# The container already includes all necessary configurations
+ENTRYPOINT service networking start && service ssh start && service distcc start && bash

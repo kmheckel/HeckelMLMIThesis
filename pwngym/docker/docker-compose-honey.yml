@@ -1,0 +1,185 @@
+services:
+  kali:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Kali
+    container_name: kali_linux
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.5
+    tty: true
+    stdin_open: true
+
+  exploitdb:
+    privileged: true
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-HTTPHoney
+    container_name: exploitdb
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.100
+    tty: true
+    stdin_open: true
+
+  # target machines
+  ssh_honey_desist:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-SSHHoney
+      args:
+        ENTRY_SCRIPT: "/entry_desist.sh"
+    container_name: ssh_server1
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.10
+    tty: true
+    stdin_open: true
+
+  compile_server_desist:
+    build:
+      context: ./
+      dockerfile: Dockerfile-distcc-target
+    container_name: compiler_server1
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.11
+    tty: true
+    stdin_open: true
+
+  ftp_honey_desist:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-FTPHoney
+      args:
+        FOLDER_TO_COPY: "prompts_desist"
+    container_name: ftp_server1
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.12
+    tty: true
+    stdin_open: true
+
+  telnet_honey_desist:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-TelnetHoney
+      args:
+        PROMPT_FILE: telnet-honeypot/desist.txt
+    container_name: telnet_server1
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.13
+    tty: true
+    stdin_open: true
+
+  # target machines
+  ssh_honey_direct:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-SSHHoney
+      args:
+        ENTRY_SCRIPT: "/entry_direct.sh"
+    container_name: ssh_server2
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.20
+    tty: true
+    stdin_open: true
+
+  compile_server_direct:
+    build:
+      context: ./
+      dockerfile: Dockerfile-distcc-target
+    container_name: compiler_server2
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.21
+    tty: true
+    stdin_open: true
+
+  ftp_honey_direct:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-FTPHoney
+      args:
+        FOLDER_TO_COPY: "prompts_direct"
+    container_name: ftp_server2
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.22
+    tty: true
+    stdin_open: true
+
+  telnet_honey_direct:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-TelnetHoney
+      args:
+        PROMPT_FILE: telnet-honeypot/bind.txt
+    container_name: telnet_server2
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.23
+    tty: true
+    stdin_open: true
+
+  # target machines
+  ssh_honey_indirect:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-SSHHoney
+      args:
+        ENTRY_SCRIPT: "/entry_indirect.sh"
+    container_name: ssh_server3
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.30
+    tty: true
+    stdin_open: true
+
+  compile_server_indirect:
+    build:
+      context: ./
+      dockerfile: Dockerfile-distcc-target
+    container_name: compiler_server3
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.31
+    tty: true
+    stdin_open: true
+
+  ftp_honey_indirect:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-FTPHoney
+      args:
+        FOLDER_TO_COPY: "prompts_indirect"
+    container_name: ftp_server3
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.32
+    tty: true
+    stdin_open: true
+
+  telnet_honey_poison:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-TelnetHoney
+      args:
+        PROMPT_FILE: telnet-honeypot/neurotoxin.txt
+    container_name: telnet_server3
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.33
+    tty: true
+    stdin_open: true
+
+
+networks:
+  hacking_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24

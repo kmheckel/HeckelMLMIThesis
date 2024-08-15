@@ -1,0 +1,19 @@
+# Use Kali Linux official image
+FROM kalilinux/kali-rolling
+
+# Optional: Avoid prompts during installations
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt install -y openssh-server kali-linux-headless 
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitTTY yes/PermitTTY yes/' /etc/ssh/sshd_config
+
+# Set root password (change 'rootpassword' to your desired password)
+RUN echo "root:root" | chpasswd
+
+EXPOSE 22 4444-4464
+
+# Run setup commands; you can modify these as needed
+RUN echo 'Setup complete. Ready to use Kali Linux.'
+
+ENTRYPOINT service ssh start && bash

@@ -1,0 +1,22 @@
+FROM alpine:latest
+
+ARG ENTRY_SCRIPT
+ENV ENTRY_SCRIPT=${ENTRY_SCRIPT}
+
+COPY ssh-honeypot/ssh-honeypot.py /ssh-honeypot.py
+COPY ssh-honeypot/util.py /util.py
+COPY ssh-honeypot/entry_desist.sh /entry_desist.sh
+COPY ssh-honeypot/entry_direct.sh /entry_direct.sh
+COPY ssh-honeypot/entry_indirect.sh /entry_indirect.sh
+COPY ssh-honeypot/entry_indirect_memory_poison.sh /entry_indirect_memory_poison.sh
+
+
+# Install python/pip
+RUN apk add --no-cache python3 py3-pip
+RUN apk add py3-paramiko
+RUN apk add --no-cache bash
+
+
+EXPOSE 1-445
+
+ENTRYPOINT bash ${ENTRY_SCRIPT}

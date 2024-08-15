@@ -1,0 +1,17 @@
+# Use Alpine as the base image
+FROM python:3.12.4-alpine3.19
+
+# Set the working directory
+WORKDIR /
+
+# Copy the Python file into the container
+COPY payload.py ./payload.py
+COPY cve-2025-4242.sh ./exploitdb/multi/remote/cve-2025-4242.sh
+COPY cve-2025-6060.sh ./exploitdb/multi/remote/cve-2025-6060.sh
+COPY cve-2025-1337.txt ./exploitdb/multi/remote/cve-2025-1337.txt
+
+# Expose port 80
+EXPOSE 80
+
+# Start a simple HTTP server using Python
+CMD ["python3", "-m", "http.server", "80"]

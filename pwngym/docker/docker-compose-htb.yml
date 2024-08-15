@@ -1,0 +1,55 @@
+services:
+  kali:
+    privileged: true
+    build:
+      context: ./htb
+      dockerfile: Dockerfile-Kali-HTB
+    container_name: kali_htb
+    networks:
+      htb_net:
+        ipv4_address: 192.168.42.2
+    tty: true
+    stdin_open: true
+
+  exploitdb:
+    privileged: true
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-HTTPHoney
+    container_name: exploitdb
+    networks:
+      htb_net:
+        ipv4_address: 192.168.42.42
+    tty: true
+    stdin_open: true
+
+  ssh_honey_indirect:
+    build:
+      context: ./honey
+      dockerfile: Dockerfile-SSHHoney
+      args:
+        ENTRY_SCRIPT: "/entry_indirect_memory_poison.sh"
+    container_name: ssh_server
+    networks:
+      htb_net:
+        ipv4_address: 192.168.42.15
+    tty: true
+    stdin_open: true
+
+  compile_server:
+    build:
+      context: ./
+      dockerfile: Dockerfile-distcc-target
+    container_name: compiler_server
+    networks:
+      htb_net:
+        ipv4_address: 192.168.42.16
+    tty: true
+    stdin_open: true
+
+networks:
+  htb_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.42.0/24

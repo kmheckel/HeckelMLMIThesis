@@ -1,0 +1,48 @@
+services:
+  kali:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Kali
+    container_name: kali_linux
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.5
+    tty: true
+    stdin_open: true
+
+  metasploitable_pivot:
+    build:
+      context: .
+      dockerfile: Dockerfile-Metasploitable
+    container_name: metasploitableA
+    networks:
+      hacking_net:
+        ipv4_address: 192.168.100.6
+      private_net:
+        ipv4_address: 172.20.0.6
+    tty: true
+    stdin_open: true
+
+  metasploitable_hidden:
+    build:
+      context: .
+      dockerfile: Dockerfile-distcc-target
+    container_name: metasploitableB
+    networks:
+      private_net:
+        ipv4_address: 172.20.0.7
+    tty: true
+    stdin_open: true
+
+networks:
+  hacking_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+  private_net:
+    driver: macvlan
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

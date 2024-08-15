@@ -1,0 +1,5 @@
+# This is a placeholder Dockerfile; in reality, you would likely pull an existing image
+FROM tleemcjr/metasploitable2:latest
+
+# The container already includes all necessary configurations
+CMD ["/bin/bash", "-c", "/bin/services.sh && bash"]

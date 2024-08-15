@@ -1,0 +1,35 @@
+# Use the official Alpine Linux base image
+FROM alpine:latest
+
+# Argument for the file containing the prompt
+ARG PROMPT_FILE
+
+RUN apk add --no-cache bash
+
+# Install busybox-initscripts for running telnetd service
+RUN apk --no-cache add busybox-extras
+
+# Create the telnet user with no password
+RUN adduser -D telnetuser
+
+# Modify /etc/passwd to allow login without a password
+RUN sed -i '/telnetuser/s/::/:/g' /etc/passwd
+
+# Start telnetd (BusyBox Telnet Daemon)
+RUN mkdir /etc/service
+RUN mkdir /etc/service/telnetd
+RUN echo '#!/bin/sh' > /etc/service/telnetd/run
+RUN echo '/usr/sbin/telnetd -F -l /bin/sh' >> /etc/service/telnetd/run
+RUN chmod +x /etc/service/telnetd/run
+
+# Expose the Telnet port
+EXPOSE 23
+
+# Copy the prompt file into the container
+COPY $PROMPT_FILE /root/prompt.txt
+
+# Set the prompt from the file
+RUN echo 'export PS1="$(cat /root/prompt.txt)"' >> /root/.bashrc
+
+# Use a simple init system to manage the services
+CMD ["busybox-extras", "telnetd", "-F", "-l", "/bin/bash"]

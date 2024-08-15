@@ -1,0 +1,19 @@
+services:
+  kali:
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Kali
+    container_name: kali_linux
+    networks:
+      vnet0:
+        ipv4_address: 192.168.56.2
+    tty: true
+    stdin_open: true
+
+networks:
+  vnet0:
+    driver: macvlan
+    external: true
+    driver_opts:
+      parent: vboxnet0

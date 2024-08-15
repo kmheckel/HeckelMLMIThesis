@@ -1,0 +1,6 @@
+build/
+pwngym.egg-info/
+pwngym/__pycache__/
+.env
+logs/
+__pycache__/
